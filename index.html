@@ -25,11 +25,14 @@
         ctx.fillRect(0,0, canvas.width, canvas.height);
 
         function desenha (t) {
-            to = t0 ?? t;
+            t0 = t0 ?? t;
             dt = (t - t0)/1000;
             //Desenho 
             ctx.fillStyle = "black";
             ctx.fillRect(0,0, canvas.width, canvas.height);
+
+            //Atualiza estado
+            x = x + 10*dt;
 
             //Desenho elementos
             ctx.fillStyle = "white";
