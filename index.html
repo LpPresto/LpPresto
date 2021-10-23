@@ -13,15 +13,20 @@
     <script>
         let canvas = document.querySelector("canvas");
         let ctx = canvas.getContext("2d");
+        let t0;
+        let dt;
+
         canvas.width = 480;
         canvas.height = 320;
         let x = 150;
-        desenha ();
+        requestAnimationFrame(desenha);
 
         ctx.fillStyle = "black";
         ctx.fillRect(0,0, canvas.width, canvas.height);
 
-        function desenha () {
+        function desenha (t) {
+            to = t0 ?? t;
+            dt = (t - t0)/1000;
             //Desenho 
             ctx.fillStyle = "black";
             ctx.fillRect(0,0, canvas.width, canvas.height);
@@ -29,6 +34,9 @@
             //Desenho elementos
             ctx.fillStyle = "white";
             ctx.fillRect(x, 150, 20, 20);
+
+            requestAnimationFrame(desenha);
+            t0 = t;
 
         }
         
