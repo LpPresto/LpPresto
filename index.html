@@ -33,16 +33,18 @@
             ctx.fillRect(0,0, canvas.width, canvas.height);
 
             //Atualiza estados
-            x = x + 10*dt;
+            x = x + 10* Math.cos(a);   
             a = a + 2*Math.PI*dt;
-            y = 100 + 100* Math.cos(a);
-
+            y = 100 + 50* Math.cos(a);
+            
+           
             //Desenho elementos
             ctx.fillStyle = "white";
             ctx.fillRect(x, y, 20, 20);
 
             requestAnimationFrame(desenha);
             t0 = t;
+            ctx.clearRect(desenha);
 
         }
         
