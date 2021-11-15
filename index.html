@@ -11,11 +11,11 @@
     <canvas></canvas>
     <p>por Leandro Pereira Presto(2021)</p>
     <script>
+ 
         let canvas = document.querySelector("canvas");
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
-        //Estrutura
         let p = {
             x : 150,
             vx : 0,
@@ -23,17 +23,24 @@
             y : 100,
             vy : 0,
             ay : 0,
+            desenhar: function(){
+                ctx.fillStyle = "white";
+                ctx.fillRect(this.x, this.y, 20, 20);
+            }
         };
  
-        let e ={
-            ex : 300,
-            evx : 0,
-            eax : 0,
-            ey : 20,
-            evy : 0,
-            eay : 0,
+        let e = {
+            x : 300,
+            vx : 0,
+            ax : 0,
+            y : 200,
+            vy : 0,
+            ay : 0,
+            desenhar: function(){
+                ctx.fillStyle = "red";
+                ctx.fillRect(this.x, this.y, 20, 20);
+            }
         };
- 
         const K = 180;
         let t0;
         let dt;
@@ -50,8 +57,8 @@
             ctx.fillRect(0,0, canvas.width, canvas.height);
  
             //Controladores
-            e.eax = 0.5*(p.x - e.ex) - 0.2*e.evx;
-            e.eay = 0.5*(p.y - e.ey) - 0.2*e.evy;
+            e.ax = 0.5*(p.x - e.x) - 0.2*e.vx;
+            e.ay = 0.5*(p.y - e.y) - 0.2*e.vy;
            
             //Atualiza dinâmica dos estados
             p.vx = p.vx + p.ax*dt;
@@ -59,17 +66,14 @@
             p.vy = p.vy + p.ay*dt;  
             p.y = p.y + p.vy * dt;
            
-            e.evx = e.evx + e.eax*dt;
-            e.ex = e.ex + e.evx * dt;
-            e.evy = e.evy + e.eay*dt;  
-            e.ey = e.ey + e.evy * dt;
+            e.vx = e.vx + e.ax*dt;
+            e.x = e.x + e.vx * dt;
+            e.vy = e.vy + e.ay*dt;  
+            e.y = e.y + e.vy * dt;
  
             //Desenho elementos
-            ctx.fillStyle = "white";
-            ctx.fillRect(p.x, p.y, 20, 20);
- 
-            ctx.fillStyle = "red";
-            ctx.fillRect(e.ex, e.ey, 20, 20);
+            p.desenhar();
+            e.desenhar();
  
             requestAnimationFrame(desenha);
             t0 = t;
@@ -102,19 +106,16 @@
             console.log(event.key);
             switch (event.key) {
                 case "ArrowUp":
-                    p.vy = 0;
                     p.ay = 0;
                     break;    
                 case "ArrowDown":
-                    p.vy = 0;
                     p.ay = 0;
                     break;
                 case "ArrowLeft":
-                    p.vx = 0;
+ 
                     p.ax = 0;
                     break;    
                 case "ArrowRight":
-                    p.vx = 0;
                     p.ax = 0;
                     break;
             }
@@ -124,3 +125,4 @@
     </script>
 </body>
 </html>
+ 
