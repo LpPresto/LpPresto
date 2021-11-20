@@ -16,6 +16,8 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
+        let pontos = 0;
+
         let p = {
             x : 150,
             vx : 0,
@@ -31,7 +33,7 @@
         const sprites = [];
         for (let ne = 0; ne < 20; ne++) {
             let e = {
-                x : canvas.width *(1 + 2 * Math.random()),
+                x : canvas.width *(1 + 10 * Math.random()),
                 vx : -20,
                 ax : 0,
                 y : canvas.height * Math.random(),
@@ -92,9 +94,27 @@
                 sprite.mover?.();
                 //Desenho elementos
                 sprite.desenhar();
- 
+
+                if (colidiram(o, sprite) && o!== sprite) {
+                    o.x = -1000;
+                    o.y = -1000;
+                    o.vx = 0;
+                    o.ax = 0
+                    sprite.x = 1000;
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos++;
+                }
+                if (colidiram(p, sprite) && o!== sprite) {
+                    sprite.x = 1000;
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos -= 3;
+                }
             }
- 
+            ctx.fillStyle = "yellow";
+            ctx.font = "20px Impact";
+            ctx.fillText(pontos, 10, 30);
             requestAnimationFrame(desenha);
             t0 = t;
  
@@ -126,7 +146,6 @@
        
         function teclaPressionada(event){
             //Adiciona controle de velocidades
-            console.log(event.key);
             switch (event.key) {
                 case "ArrowUp":
                     p.ay = -K;
@@ -171,7 +190,16 @@
             }
  
         }
- 
+
+        function colidiram(A, B) {
+            return !(
+                (A.x > B.x + 20)
+                || (A.x + 20 < B.x)
+                || (A.y > B.y + 20)
+                || (A.y + 20 < B.y)  
+            );
+            
+        }
     </script>
 </body>
 </html>
